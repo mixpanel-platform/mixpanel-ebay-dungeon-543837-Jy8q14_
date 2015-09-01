@@ -33,6 +33,17 @@
 
         if (eventName) {
           MP.api.segment(eventName, propName, dateRange).done(function(results) {
+            var max = {};
+            var min = {};
+            data = results.values();
+            console.log(data);
+            var keys = Object.keys(data);
+            for(i=0; i<keys.length; i++) {
+              max[keys[i]] = _.invert(data[keys[i]])[_.max(data[keys[i]])];
+              min[keys[i]] = _.invert(data[keys[i]])[_.min(data[keys[i]])];
+            }
+            console.log(max);
+            console.log(min);
             eventGraph.MPChart('setData', results);
             eventTable.MPTable('setData', results);
           });
